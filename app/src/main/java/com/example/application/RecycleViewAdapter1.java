@@ -1,0 +1,105 @@
+package com.example.application;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+
+public class RecycleViewAdapter1 extends RecyclerView.Adapter<RecycleViewAdapter1.ViewHolder> {
+
+    public interface OnItemClickListener{
+        void onItemClick(View v,int pos);
+    }
+
+    private OnItemClickListener mListener=null;
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        this.mListener=listener;
+    }
+
+
+
+    private ArrayList<TripItem> data =null;
+    public class ViewHolder extends RecyclerView.ViewHolder{
+        TextView tv1;
+        TextView tv2;
+        ImageView iv1;
+
+        ViewHolder(View v){
+            super(v);
+            tv1=v.findViewById(R.id.locationText);
+            tv2=v.findViewById(R.id.timeText);
+            iv1=v.findViewById(R.id.imageView);
+
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos=getAdapterPosition();
+                    if(pos!=RecyclerView.NO_POSITION){
+                        mListener.onItemClick(v,pos);
+                    }
+                }
+            });
+        }
+    }
+
+    RecycleViewAdapter1(ArrayList<TripItem> list){
+        data=list;
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Context context = parent.getContext() ;
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) ;
+
+        View view = inflater.inflate(R.layout.trip_item, parent, false) ;
+        RecycleViewAdapter1.ViewHolder vh = new RecycleViewAdapter1.ViewHolder(view) ;
+
+        return vh ;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+
+        TripItem el = data.get(position) ;
+        holder.tv1.setText(el.getLocation()) ;
+
+        String t1;
+        int h=el.getHour();
+
+        if(h>=12&&h<24){
+            t1="PM";
+            if(h!=12) h-=12;
+        }
+        else{
+            t1="AM";
+            if(h==24) h=0;
+        }
+
+
+        holder.tv2.setText(el.getMonth()+"/"+el.getDay()+" - "+t1+" "+h+"시");
+
+        holder.iv1.setImageBitmap(Bitmap.createScaledBitmap(el.getPic(),1000,500,false));
+
+
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return data.size();
+    }
+
+
+}

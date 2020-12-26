@@ -55,6 +55,13 @@
             android:textSize="15dp"
             android:hint="구매코드 입력"
             />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background"
+            android:layout_gravity="center"
+            />
+
 
 
 
