@@ -66,9 +66,9 @@ public class Fragment2 extends Fragment {
                     list.add(new TripItem(tmpObj.getTourName(),tmpObj.getTourMonth(),tmpObj.getTourDay(),tmpObj.getTourHour(),StringToBitmap(tmpObj.getImage()),tmpObj.getLocationId()));
                 }
 
-                RecyclerView rv=rootView.findViewById(R.id.recyclerView);
+                RecyclerView rv=rootView.findViewById(R.id.recyclerView2);
                 rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-                RecycleViewAdapter1 adapter=new RecycleViewAdapter1(list);
+                RecycleViewAdapter2 adapter=new RecycleViewAdapter2(list);
                 rv.setAdapter(adapter);
 
             }
